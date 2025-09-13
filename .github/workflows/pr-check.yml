@@ -1,0 +1,16 @@
+name: PR basic checks
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show changed files
+        run: |
+          echo "Arquivos alterados neste PR:"
+          git fetch origin ${{ github.base_ref }}
+          git diff --name-only origin/${{ github.base_ref }}... | sed 's/^/ - /'
